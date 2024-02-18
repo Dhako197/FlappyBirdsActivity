@@ -27,7 +27,19 @@ public class Pipe : MonoBehaviour
         {
             Debug.Log("Pipe :: DestroyPipe()");
 
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+
+            if (GameManager.Instance.isDay)
+            {
+                PipePool.Instance.Return(gameObject);
+            }
+
+            else
+            {
+                PipePool.Instance.ReturnNight(gameObject);
+            }
+            
+            
         }
     }
 }

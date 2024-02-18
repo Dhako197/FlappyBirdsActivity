@@ -7,8 +7,16 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private float timeToReloadScene;
 
+    [SerializeField] private GameObject DayBackground;
+    [SerializeField] private GameObject NightBackground;
+    [SerializeField] private GameObject ScoreCanva;
+
     [Space, SerializeField] private UnityEvent onStartGame;
     [SerializeField] private UnityEvent onGameOver, onIncreaseScore;
+
+    public int maxScore= 0;
+
+    public bool isDay;
 
     public int score
     {
@@ -31,6 +39,20 @@ public class GameManager : MonoBehaviour
             Instance = this;
         else
             DestroyImmediate(this.gameObject);
+
+        float randomDay = Random.Range(0, 2);
+        switch (randomDay)
+        {
+            case 0:
+                isDay = true;
+                DayBackground.SetActive(true);
+                break;
+            case 1:
+                isDay = false;
+                NightBackground.SetActive(true);
+                break;
+        }
+
     }
 
     public void StartGame()
@@ -50,6 +72,12 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
 
         onGameOver?.Invoke();
+
+        if (SaveBestScore.Instance.BestScore < score)
+            SaveBestScore.Instance.BestScore = score;
+        UIManager.Instance.UpdateMaxScore();
+        
+        ScoreCanva.SetActive(true);
 
         StartCoroutine(ReloadScene());
     }

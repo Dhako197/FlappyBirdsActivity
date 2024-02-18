@@ -4,6 +4,8 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI finalscore;
+    [SerializeField] private TextMeshProUGUI bestScore;
 
     // Singleton!
     public static UIManager Instance;
@@ -21,5 +23,12 @@ public class UIManager : MonoBehaviour
         Debug.Log("UIManager :: UpdateScoreText()");
 
         score.text = GameManager.Instance.score.ToString();
+        
+    }
+
+    public void UpdateMaxScore( )
+    {
+        finalscore.text = GameManager.Instance.score.ToString();
+        bestScore.text = SaveBestScore.Instance.BestScore.ToString();
     }
 }

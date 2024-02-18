@@ -8,10 +8,34 @@ public class Bird : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rigidbody2D;
 
+    private Animator _animator;
+    public RuntimeAnimatorController yellowbird;
+    public RuntimeAnimatorController bluebird;
+    public RuntimeAnimatorController redbird;
+    
+
     private void Awake()
     {
         if (rigidbody2D == null)
             rigidbody2D = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+
+        float randomBird = Random.Range(0, 3);
+        switch (randomBird)
+        {
+            case 0 :
+                _animator.runtimeAnimatorController = yellowbird;
+                break;
+            case 1:
+                _animator.runtimeAnimatorController = bluebird;
+                break;
+            case 2:
+                _animator.runtimeAnimatorController = redbird;
+                break;
+        }
+
+        
+
     }
 
     private void Update()

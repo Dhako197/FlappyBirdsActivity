@@ -4,6 +4,7 @@ using UnityEngine;
 public class PipeSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject pipe;
+    [SerializeField] private GameObject nightPipe;
 
     [Space, SerializeField] private float timeToSpawnFirstPipe;
     [SerializeField] private float timeToSpawnPipe;
@@ -15,6 +16,11 @@ public class PipeSpawner : MonoBehaviour
 
     private void Start()
     {
+        //StartCoroutine(SpawnPipes());
+    }
+
+    public void ActivateGame()
+    {
         StartCoroutine(SpawnPipes());
     }
 
@@ -22,7 +28,19 @@ public class PipeSpawner : MonoBehaviour
     {
         Debug.Log("PipeSpawner :: SpawnPipe()");
 
-        Instantiate(pipe, GetPipePosition(), Quaternion.identity);
+        //Instantiate(pipe, GetPipePosition(), Quaternion.identity);
+
+        if (GameManager.Instance.isDay)
+        {
+            PipePool.Instance.Get().transform.position = GetPipePosition();
+        }
+        else if (GameManager.Instance.isDay == false)
+        {
+            PipePool.Instance.GetNight().transform.position = GetPipePosition();
+        }
+        
+        
+        
     }
 
     private Vector3 GetPipePosition()
